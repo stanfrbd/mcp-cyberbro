@@ -150,6 +150,11 @@ ENGINES = [
         "supports": ["IP", "risk"],
         "description": "Malicious ASN detection (free). Checks if IP's ASN is listed in Spamhaus ASNDROP or Brianhama Bad ASN databases. Requires ipapi, ipinfo to be selected to get the ASN. Free, no API key",
     },
+    {
+        "name": "rosti",
+        "supports": ["domain", "URL", "IP", "email", "hash", "risk"],
+        "description": "IOC search and enrichment. Searches Rösti IOC data for domains, URLs, IPs, emails, and hashes (MD5, SHA1, SHA256), API key required",
+    },
 ]
 
 mcp = FastMCP("CyberbroMCP")
