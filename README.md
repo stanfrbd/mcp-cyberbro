@@ -155,7 +155,7 @@ To use this MCP server with Claude Desktop locally, add the following to your Cl
 ## Using with other LLMs and MCP Clients
 This MCP server can be used with any LLM or MCP client that supports the Model Context Protocol. The server listens for MCP protocol messages on stdin/stdout, making it compatible with various LLMs and clients. BUT, it is important to note that the server is designed to work with LLMs that can interpret and execute the MCP commands correctly. I tried it personlly with OpenAI (in Open Web UI) and it is not as good as Claude Desktop.
 
-Documentation for other LLMs and MCP clients with Open Web UI: https://docs.openwebui.com/openapi-servers/mcp/
+Documentation for other LLMs and MCP clients with Open Web UI: https://docs.openwebui.com/features/extensibility/plugin/tools/openapi-servers/mcp#-why-use-mcpo
 
 It uses a OpenAPI proxy to expose the MCP server as an OpenAPI server, allowing you to interact with it using standard HTTP requests. This makes it easy to integrate with other applications and services that support OpenAPI.
 
@@ -188,6 +188,10 @@ It uses a OpenAPI proxy to expose the MCP server as an OpenAPI server, allowing 
 ```
 uvx mcpo --config config.json --port 8000
 ```
+
+Note: you can add `--server-type` argument with `streamable-http` or `sse` and listening endpoint.
+
+Visit https://github.com/open-webui/mcpo for more info.
 
 3. The server will start and listen for requests on port 8000. You can access the OpenAPI documentation (for instance) at `http://localhost:8000/docs`.
 
