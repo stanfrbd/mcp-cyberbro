@@ -102,8 +102,7 @@ Example config using `uvx`:
       "command": "uvx",
       "args": ["mcp-cyberbro"],
       "env": {
-        "CYBERBRO_URL": "http://localhost:5000",
-        "API_PREFIX": "api"
+        "CYBERBRO_URL": "http://localhost:5000"
       }
     }
   }
@@ -132,6 +131,27 @@ Example with Docker + `stdio`:
       }
     }
   }
+}
+```
+
+### Usage in VSCode - Example
+
+Create `.vscode/mcp.json`  
+
+```json
+{
+	"servers": {
+		"mcp-cyberbro": {
+			"type": "stdio",
+			"command": "uvx",
+			"args": [
+				"mcp-cyberbro"
+			],
+			"env": {
+				"CYBERBRO_URL": "http://127.0.0.1:5000"
+			}
+		}
+	}
 }
 ```
 
