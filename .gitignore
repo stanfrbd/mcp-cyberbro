@@ -3,7 +3,7 @@
 
 __pycache__/
 .dccache
-.pytest_cache
+.pytest_cache/
 .qodo
 .ruff_cache
 .venv
@@ -13,4 +13,13 @@ __pycache__/
 data/
 log*/
 secrets.json
-tests/
+uv.lock
+.env
+.env.test
+.mcp.json
+.mcpregistry_*
+*.pyc
+*.egg-info/
+dist/
+build/
+.eggs/

@@ -1,0 +1,74 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mcp-cyberbro"
+version = "0.0.1"
+description = "Model Context Protocol server for Cyberbro IOC analysis and enrichment"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "stanfrbd"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+keywords = [
+    "mcp",
+    "model-context-protocol",
+    "cyberbro",
+    "threat-intelligence",
+    "osint",
+    "ioc",
+]
+dependencies = [
+    "mcp[cli]>=1.0.0",
+    "httpx>=0.27.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/stanfrbd/mcp-cyberbro"
+Repository = "https://github.com/stanfrbd/mcp-cyberbro"
+Issues = "https://github.com/stanfrbd/mcp-cyberbro/issues"
+
+[project.scripts]
+mcp-cyberbro = "mcp_cyberbro.cli:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-mock>=3.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.15.5",
+    "pre-commit>=4.3.0",
+    "bandit>=1.9.4",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_cyberbro"]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    "tests/",
+    "docs/",
+    ".github/",
+    ".claude/",
+    ".claude-plugin/",
+    "agents/",
+    "commands/",
+    "skills/",
+    "dist/",
+    "*.png",
+    "uv.lock",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

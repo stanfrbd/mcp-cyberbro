@@ -1,0 +1,77 @@
+{
+    "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+    "name": "io.github.stanfrbd/mcp-cyberbro",
+    "title": "Cyberbro MCP Server",
+    "description": "MCP server for Cyberbro IOC extraction, enrichment and reputation analysis.",
+    "version": "0.0.1",
+    "repository": {
+        "url": "https://github.com/stanfrbd/mcp-cyberbro",
+        "source": "github"
+    },
+    "packages": [
+        {
+            "registryType": "pypi",
+            "identifier": "mcp-cyberbro",
+            "version": "0.0.1",
+            "transport": {
+                "type": "stdio"
+            },
+            "environmentVariables": [
+                {
+                    "name": "CYBERBRO_URL",
+                    "isRequired": true,
+                    "description": "Base URL of Cyberbro (for example http://localhost:5000)",
+                    "format": "string"
+                },
+                {
+                    "name": "API_PREFIX",
+                    "isRequired": false,
+                    "description": "Cyberbro API prefix (default: api)",
+                    "format": "string"
+                },
+                {
+                    "name": "SSL_VERIFY",
+                    "isRequired": false,
+                    "description": "Enable/disable SSL verification for Cyberbro API calls (true/false)",
+                    "format": "string"
+                },
+                {
+                    "name": "MCP_TRANSPORT",
+                    "isRequired": false,
+                    "description": "Transport override: stdio, sse or streamable-http",
+                    "format": "string"
+                },
+                {
+                    "name": "MCP_HOST",
+                    "isRequired": false,
+                    "description": "Host for HTTP transports",
+                    "format": "string"
+                },
+                {
+                    "name": "MCP_PORT",
+                    "isRequired": false,
+                    "description": "Port for HTTP transports",
+                    "format": "string"
+                },
+                {
+                    "name": "MCP_MOUNT_PATH",
+                    "isRequired": false,
+                    "description": "Mount path for SSE transport",
+                    "format": "string"
+                },
+                {
+                    "name": "MCP_SSE_PATH",
+                    "isRequired": false,
+                    "description": "SSE endpoint path",
+                    "format": "string"
+                },
+                {
+                    "name": "MCP_STREAMABLE_HTTP_PATH",
+                    "isRequired": false,
+                    "description": "Streamable HTTP endpoint path",
+                    "format": "string"
+                }
+            ]
+        }
+    ]
+}

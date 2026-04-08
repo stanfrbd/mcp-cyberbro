@@ -1,8 +1,6 @@
-import os
+from __future__ import annotations
+
 from typing import Any
-import httpx
-import argparse
-import json
 
 from mcp.server.fastmcp import FastMCP
 
@@ -17,7 +15,11 @@ ENGINES = [
         "supports": ["domain", "URL", "IP", "hash"],
         "description": "Searches DFIR-IRIS globally across all cases for indicators, free, API key required.",
     },
-    {"name": "rdap", "supports": ["abuse", "domain"], "description": "Checks RDAP (ex Whois) record for domain, URL"},
+    {
+        "name": "rdap",
+        "supports": ["abuse", "domain"],
+        "description": "Checks RDAP (ex Whois) record for domain, URL",
+    },
     {
         "name": "ipquery",
         "supports": ["IP", "risk", "VPN", "proxy", "geoloc"],
@@ -68,7 +70,11 @@ ENGINES = [
         "supports": ["ports", "IP"],
         "description": "Checks Shodan, reversed obtained IP for a given domain/URL",
     },
-    {"name": "phishtank", "supports": ["risk", "domain", "URL"], "description": "Checks Phishtank for domains, URL"},
+    {
+        "name": "phishtank",
+        "supports": ["risk", "domain", "URL"],
+        "description": "Checks Phishtank for domains, URL",
+    },
     {
         "name": "threatfox",
         "supports": ["IP", "domain", "URL"],
@@ -139,7 +145,11 @@ ENGINES = [
         "supports": ["IP", "domain", "URL"],
         "description": "Checks Google common DNS records (A, AAAA, CNAME, NS, MX, TXT, PTR) for IP, domain, URL",
     },
-    {"name": "crtsh", "supports": ["domain", "URL"], "description": "Checks crt.sh for domain, URL"},
+    {
+        "name": "crtsh",
+        "supports": ["domain", "URL"],
+        "description": "Checks crt.sh for domain, URL",
+    },
     {
         "name": "rl_analyze",
         "supports": ["domain", "URL", "IP", "hash"],
@@ -153,131 +163,18 @@ ENGINES = [
     {
         "name": "rosti",
         "supports": ["domain", "URL", "IP", "email", "hash", "risk"],
-        "description": "IOC search and enrichment. Searches Rösti IOC data for domains, URLs, IPs, emails, and hashes (MD5, SHA1, SHA256), API key required",
+        "description": "IOC search and enrichment. Searches Rosti IOC data for domains, URLs, IPs, emails, and hashes (MD5, SHA1, SHA256), API key required",
     },
 ]
 
-mcp = FastMCP("CyberbroMCP")
 
-# --- MCP tool functions for the existing tools in list_tools ---
-
-
-@mcp.tool()
-async def analyze_observable(text: str, engines: list[str]) -> Any:
-    """
-    Trigger an analysis for a given observable (IP, domain, URL, hash, chrome extension id) using Cyberbro.
-    It can support multiple observables at once separated by spaces.
-    Args:
-        text: Observable(s) to analyze.
-        engines: List of engine names.
-    Returns:
-        The analysis response from Cyberbro API.
-    """
-    try:
-        async with httpx.AsyncClient(verify=SSL_VERIFY) as client:
-            payload = {"text": text, "engines": engines}
-            response = await client.post(f"{CYBERBRO_API}/analyze", json=payload)
-            response.raise_for_status()
-            return response.json()
-    except Exception as e:
-        return {"error": f"Error executing tool analyze_observable: {str(e)}"}
-
-
-@mcp.tool()
-async def is_analysis_complete(analysis_id: str) -> Any:
-    """
-    Check if the analysis is complete for the given analysis_id.
-    Args:
-        analysis_id: Analysis ID to check.
-    Returns:
-        The completion status from Cyberbro API.
-    """
-    try:
-        async with httpx.AsyncClient(verify=SSL_VERIFY) as client:
-            response = await client.get(f"{CYBERBRO_API}/is_analysis_complete/{analysis_id}")
-            response.raise_for_status()
-            return response.json()
-    except Exception as e:
-        return {"error": f"Error executing tool is_analysis_complete: {str(e)}"}
-
-
-@mcp.tool()
-async def get_analysis_results(analysis_id: str) -> Any:
-    """
-    Retrieve the results of a previous analysis by analysis_id.
-    Args:
-        analysis_id: Analysis ID to retrieve results for.
-    Returns:
-        The analysis results from Cyberbro API.
-    """
-    try:
-        async with httpx.AsyncClient(verify=SSL_VERIFY) as client:
-            response = await client.get(f"{CYBERBRO_API}/results/{analysis_id}")
-            response.raise_for_status()
-            return response.json()
-    except Exception as e:
-        return {"error": f"Error executing tool get_analysis_results: {str(e)}"}
-
-
-@mcp.tool()
-async def get_engines() -> Any:
-    """
-    List available Cyberbro engines.
-    This is the first tool to be called to get the usable engines.
-    Returns:
-        The list of engines.
-    """
-    try:
+def register_engine_tools(mcp: FastMCP) -> None:
+    @mcp.tool()
+    async def get_engines() -> Any:
+        """
+        List available Cyberbro engines.
+        This is the first tool to be called to get the usable engines.
+        Returns:
+            The list of engines.
+        """
         return {"engines": ENGINES}
-    except Exception as e:
-        return {"error": f"Error executing tool get_engines: {str(e)}"}
-
-
-@mcp.tool()
-async def get_web_url(analysis_id: str) -> Any:
-    """
-    Get the web GUI URL for a given analysis ID.
-    Args:
-        analysis_id: Analysis ID to get the web URL for.
-    Returns:
-        The web URL from Cyberbro API - Useful for the user to check the results.
-    """
-    try:
-        return {"web_url": f"{CYBERBRO_URL}/results/{analysis_id}"}
-    except Exception as e:
-        return {"error": f"Error executing tool get_web_url: {str(e)}"}
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Cyberbro MCP Server")
-    parser.add_argument(
-        "--cyberbro_url", type=str, required=False, help="Base URL for Cyberbro API (env: CYBERBRO_URL)"
-    )
-    parser.add_argument(
-        "--api_prefix", required=False, type=str, default=None, help="API prefix path (env: API_PREFIX, default: api)"
-    )
-    parser.add_argument(
-        "--no_ssl_verify",
-        required=False,
-        action="store_true",
-        help="Disable SSL verification (env: SSL_VERIFY), defaults to verified",
-    )
-    args = parser.parse_args()
-
-    # Determine CYBERBRO_URL from args or environment, ensuring no trailing slash
-    CYBERBRO_URL = (args.cyberbro_url.rstrip("/") if args.cyberbro_url else None) or (
-        os.environ.get("CYBERBRO_URL", "").rstrip("/") or None
-    )
-    # Determine API_PREFIX from args or environment, defaulting to "api", ensuring no trailing slash
-    API_PREFIX = (args.api_prefix.rstrip("/") if args.api_prefix else "api") or os.environ.get(
-        "API_PREFIX", "api"
-    ).rstrip("/")
-
-    if not CYBERBRO_URL:
-        raise ValueError("cyberbro_url must be provided as --cyberbro_url or CYBERBRO_URL env variable")
-
-    CYBERBRO_API = CYBERBRO_URL + "/" + API_PREFIX
-    SSL_VERIFY = (not args.no_ssl_verify if args.no_ssl_verify else True) and os.environ.get(
-        "SSL_VERIFY", "true"
-    ).lower() == "true"
-    mcp.run(transport="stdio")
