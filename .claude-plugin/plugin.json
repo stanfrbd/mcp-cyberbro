@@ -1,0 +1,37 @@
+{
+    "name": "cyberbro",
+    "version": "0.0.2",
+    "description": "Cyberbro IOC analysis toolkit. Extract, enrich, and analyze observables with 5 MCP tools.",
+    "author": {
+        "name": "stanfrbd"
+    },
+    "homepage": "https://github.com/stanfrbd/mcp-cyberbro",
+    "repository": "https://github.com/stanfrbd/mcp-cyberbro",
+    "license": "MIT",
+    "keywords": [
+        "cyberbro",
+        "threat-intelligence",
+        "osint",
+        "ioc",
+        "mcp"
+    ],
+    "mcpServers": {
+        "cyberbro": {
+            "command": "uvx",
+            "args": [
+                "mcp-cyberbro"
+            ],
+            "env": {
+                "CYBERBRO_URL": "${CYBERBRO_URL}",
+                "API_PREFIX": "${API_PREFIX}",
+                "SSL_VERIFY": "${SSL_VERIFY}",
+                "MCP_TRANSPORT": "${MCP_TRANSPORT}",
+                "MCP_HOST": "${MCP_HOST}",
+                "MCP_PORT": "${MCP_PORT}",
+                "MCP_MOUNT_PATH": "${MCP_MOUNT_PATH}",
+                "MCP_SSE_PATH": "${MCP_SSE_PATH}",
+                "MCP_STREAMABLE_HTTP_PATH": "${MCP_STREAMABLE_HTTP_PATH}"
+            }
+        }
+    }
+}
