@@ -1,8 +1,8 @@
 name: Build and Publish amd64 (default) Docker image on GitHub Container Registry
 on:
-  push:
-    branches:
-      - main
+  release:
+    types:
+      - published
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
         run: echo ${{ secrets.DEPLOYMENT_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.repository_owner }}/mcp-cyberbro:latest .
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/mcp-cyberbro:${{ github.event.release.tag_name }} -t ghcr.io/${{ github.repository_owner }}/mcp-cyberbro:latest .
 
       - name: Push Docker image
-        run: docker push ghcr.io/${{ github.repository_owner }}/mcp-cyberbro:latest
+        run: docker push ghcr.io/${{ github.repository_owner }}/mcp-cyberbro:${{ github.event.release.tag_name }} && docker push ghcr.io/${{ github.repository_owner }}/mcp-cyberbro:latest
