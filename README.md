@@ -1,3 +1,6 @@
+<!-- mcp-server: cyberbro | tools: 5 | resources: 0 | transport: stdio,sse,streamable-http | auth: none | framework: fastmcp -->
+<!-- mcp-name: io.github.stanfrbd/mcp-cyberbro -->
+
 [![MseeP.ai Security Assessment Badge](https://mseep.net/pr/stanfrbd-mcp-cyberbro-badge.png)](https://mseep.ai/app/stanfrbd-mcp-cyberbro)
 
 <h1 align="center">Cyberbro MCP Server</h1>

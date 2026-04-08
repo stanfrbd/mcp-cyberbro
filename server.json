@@ -3,7 +3,7 @@
     "name": "io.github.stanfrbd/mcp-cyberbro",
     "title": "Cyberbro MCP Server",
     "description": "MCP server for Cyberbro IOC extraction, enrichment and reputation analysis.",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "repository": {
         "url": "https://github.com/stanfrbd/mcp-cyberbro",
         "source": "github"
@@ -12,7 +12,7 @@
         {
             "registryType": "pypi",
             "identifier": "mcp-cyberbro",
-            "version": "0.0.2",
+            "version": "0.0.3",
             "transport": {
                 "type": "stdio"
             },
