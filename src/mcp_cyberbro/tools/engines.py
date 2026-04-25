@@ -6,6 +6,16 @@ from mcp.server.fastmcp import FastMCP
 
 ENGINES = [
     {
+        "name": "misp_feedback",
+        "supports": ["IP", "domain", "hash"],
+        "description": "Checks MISP-Feedback warninglists for IP, domain, and hashes to identify false positives. API key optional, self-hosted server URL required.",
+    },
+    {
+        "name": "ransomware_live",
+        "supports": ["domain", "URL"],
+        "description": "Checks the Ransomware.Live Pro API to determine whether a domain has appeared as a ransomware victim on a data leak site (DLS). Free API key required.",
+    },
+    {
         "name": "reverse_dns",
         "supports": ["domain", "IP", "abuse"],
         "description": "Performs a reverse DNS lookup (local DNS) for IP, domain, URL (on the Cyberbro machine)",
