@@ -31,13 +31,6 @@ def build_parser() -> argparse.ArgumentParser:
         help="Port for HTTP transports (env: MCP_PORT, default: SDK default)",
     )
     parser.add_argument(
-        "--mount_path",
-        required=False,
-        type=str,
-        default=None,
-        help="Mount path for SSE transport (env: MCP_MOUNT_PATH, default: SDK default)",
-    )
-    parser.add_argument(
         "--sse_path",
         required=False,
         type=str,

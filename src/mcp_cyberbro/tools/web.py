@@ -2,12 +2,12 @@ from __future__ import annotations
 
 from typing import Any
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 
 from mcp_cyberbro.utils.config import CyberbroConfig
 
 
-def register_web_tools(mcp: FastMCP, config: CyberbroConfig) -> None:
+def register_web_tools(mcp: MCPServer, config: CyberbroConfig) -> None:
     @mcp.tool()
     async def get_web_url(analysis_id: str) -> Any:
         """

@@ -2,13 +2,13 @@ from __future__ import annotations
 
 from typing import Any
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 
 from mcp_cyberbro.utils.config import CyberbroConfig
 from mcp_cyberbro.utils.http import get_json, post_json
 
 
-def register_analysis_tools(mcp: FastMCP, config: CyberbroConfig) -> None:
+def register_analysis_tools(mcp: MCPServer, config: CyberbroConfig) -> None:
     @mcp.tool()
     async def analyze_observable(text: str, engines: list[str]) -> Any:
         """

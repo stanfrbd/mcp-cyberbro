@@ -12,7 +12,6 @@ class CyberbroConfig:
     transport: str = "stdio"
     host: str | None = None
     port: int | None = None
-    mount_path: str | None = None
     sse_path: str | None = None
     streamable_http_path: str | None = None
 
@@ -44,7 +43,6 @@ def resolve_config(args) -> CyberbroConfig:
     transport = args.transport or os.environ.get("MCP_TRANSPORT", "stdio")
     host = args.host or os.environ.get("MCP_HOST")
     port = args.port or (int(os.environ["MCP_PORT"]) if os.environ.get("MCP_PORT") else None)
-    mount_path = args.mount_path or os.environ.get("MCP_MOUNT_PATH")
     sse_path = args.sse_path or os.environ.get("MCP_SSE_PATH")
     streamable_http_path = args.streamable_http_path or os.environ.get("MCP_STREAMABLE_HTTP_PATH")
 
@@ -55,7 +53,6 @@ def resolve_config(args) -> CyberbroConfig:
         transport=transport,
         host=host,
         port=port,
-        mount_path=mount_path,
         sse_path=sse_path,
         streamable_http_path=streamable_http_path,
     )

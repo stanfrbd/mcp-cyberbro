@@ -60,13 +60,18 @@ docker run --rm -p 8000:8000 \
   ghcr.io/stanfrbd/mcp-cyberbro:latest
 ```
 
-To force `stdio` transport:
+To run in `stdio` mode, a custom Dockerfile is required:
+
+```dockerfile
+FROM ghcr.io/stanfrbd/mcp-cyberbro:latest
+CMD ["mcp-cyberbro", "--transport", "stdio"]
+```
+
+Build and use it:
 
 ```bash
-docker run -i --rm \
-  -e CYBERBRO_URL=http://host.docker.internal:5000 \
-  ghcr.io/stanfrbd/mcp-cyberbro:latest \
-  --transport stdio
+docker build -t mcp-cyberbro-stdio .
+docker run -i --rm -e CYBERBRO_URL=http://host.docker.internal:5000 mcp-cyberbro-stdio
 ```
 
 ## Configuration
@@ -109,23 +114,14 @@ Example config using `uvx`:
 }
 ```
 
-Example with Docker + `stdio`:
+To use Docker with `stdio` transport (required by some MCP clients), build a custom image as shown in the Docker section above, then reference it:
 
 ```json
 {
   "mcpServers": {
     "cyberbro": {
       "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "--rm",
-        "-e",
-        "CYBERBRO_URL",
-        "ghcr.io/stanfrbd/mcp-cyberbro:latest",
-        "--transport",
-        "stdio"
-      ],
+      "args": ["run", "-i", "--rm", "-e", "CYBERBRO_URL", "mcp-cyberbro-stdio"],
       "env": {
         "CYBERBRO_URL": "http://localhost:5000"
       }

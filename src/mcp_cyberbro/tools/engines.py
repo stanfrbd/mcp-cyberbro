@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 
 ENGINES = [
     {
@@ -26,7 +26,7 @@ ENGINES = [
         "description": "Searches DFIR-IRIS globally across all cases for indicators, free, API key required.",
     },
     {
-        "name": "rdap",
+        "name": "rdap_whois",
         "supports": ["abuse", "domain"],
         "description": "Checks RDAP (ex Whois) record for domain, URL",
     },
@@ -131,6 +131,11 @@ ENGINES = [
         "description": "Searches Hudson Rock results for domains, URL, Email",
     },
     {
+        "name": "hister",
+        "supports": ["IP", "domain", "URL", "email", "hash"],
+        "description": "Checks Hister for IP, domain, URL, email, hash. API key required.",
+    },
+    {
         "name": "webscout",
         "supports": ["IP", "risk", "geoloc", "VPN", "proxy"],
         "description": "Checks WebScout for IP, reversed obtained IP for a given domain / URL",
@@ -178,7 +183,7 @@ ENGINES = [
 ]
 
 
-def register_engine_tools(mcp: FastMCP) -> None:
+def register_engine_tools(mcp: MCPServer) -> None:
     @mcp.tool()
     async def get_engines() -> Any:
         """
