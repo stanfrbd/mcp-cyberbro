@@ -180,6 +180,16 @@ ENGINES = [
         "supports": ["domain", "URL", "IP", "email", "hash", "risk"],
         "description": "IOC search and enrichment. Searches Rosti IOC data for domains, URLs, IPs, emails, and hashes (MD5, SHA1, SHA256), API key required",
     },
+    {
+        "name": "ms_tenant_check",
+        "supports": ["domain","email","free_no_key"],
+        "description": "Checks whether a domain or email is associated with a Microsoft Entra ID tenant; no API key",
+    },
+    {
+        "name": "scanmalware",
+        "supports": ["domain","url","ip","free_no_key"],
+        "description": "Checks the ScanMalware archive for directly scanned IP addresses, domains, and URLs; no API key",
+    },
 ]
 
 
