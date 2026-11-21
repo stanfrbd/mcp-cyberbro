@@ -97,3 +97,7 @@ async def test_register_engine_tools_exposes_known_engines():
 
     assert result["engines"] == ENGINES
     assert any(engine["name"] == "reverse_dns" for engine in result["engines"])
+    names = {engine["name"] for engine in result["engines"]}
+    assert "nogon" in names
+    assert "vpndetection" in names
+    assert "hister" not in names
