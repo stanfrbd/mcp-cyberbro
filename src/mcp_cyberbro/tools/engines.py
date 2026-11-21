@@ -131,9 +131,14 @@ ENGINES = [
         "description": "Searches Hudson Rock results for domains, URL, Email",
     },
     {
-        "name": "hister",
+        "name": "nogon",
         "supports": ["IP", "domain", "URL", "email", "hash"],
-        "description": "Checks Hister for IP, domain, URL, email, hash. API key required.",
+        "description": "Searches a configured Nogon index for IP, domain, URL, email, and hash. API key and base URL required.",
+    },
+    {
+        "name": "vpndetection",
+        "supports": ["IP", "risk", "VPN", "proxy", "free_no_key"],
+        "description": "Checks VPNDetection.io for VPN, Tor, and relay indicators on IPv4 and IPv6 addresses. Free, no API key.",
     },
     {
         "name": "webscout",
